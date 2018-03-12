@@ -103,17 +103,17 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
 
         //Convertir entrada a binario     
         $scope.entradaBinaria = stringToBinary($scope.entrada, true);  
-        
+        var _entradaSinEspacios = $scope.entradaBinaria.replace(/\s/g,'')
         //Codificar Salida
-        for (i = 0; i < $scope.entradaBinaria.length; i++) {
+        for (i = 0; i < _entradaSinEspacios.length; i++) {
             if (i == 0){
                 _estadoActual = $scope.maquinaEstados[0].estadoActual;
             }else{
-                _estadoActual = $scope.maquinaEstados.filter(e => e.estadoActual == _estadoSiguiente).map(e => e.estadoActual);
+                _estadoActual = $scope.maquinaEstados.filter(e => e.estadoActual == _estadoSiguiente && e.entrada == _entrada).map(e => e.estadoActual);
             }
             _entrada = $scope.entradaBinaria[i];
             _salida += $scope.maquinaEstados.filter(e => e.estadoActual == _estadoActual && e.entrada == _entrada).map(e => e.salida);
-            _estadoSiguiente = $scope.maquinaEstados.filter(e => e.estadoActual == _estadoActual && e.entrada == _entrada).map(e => e.salida);
+            _estadoSiguiente = $scope.maquinaEstados.filter(e => e.estadoActual == _estadoActual && e.entrada == _entrada).map(e => e.estadoSiguiente);
             
         }
 
