@@ -102,7 +102,22 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
         $scope.MaquinaEstados();
 
         //Convertir entrada a binario     
-        $scope.entradaBinaria = stringToBinary($scope.entrada, true);              
+        $scope.entradaBinaria = stringToBinary($scope.entrada, true);  
+        
+        //Codificar Salida
+        for (i = 0; i < $scope.entradaBinaria.length; i++) {
+            if (i == 0){
+                _estadoActual = $scope.maquinaEstados[0].estadoActual;
+            }else{
+                _estadoActual = $scope.maquinaEstados.filter(e => e.estadoActual == _estadoSiguiente).map(e => e.estadoActual);
+            }
+            _entrada = $scope.entradaBinaria[i];
+            _salida += $scope.maquinaEstados.filter(e => e.estadoActual == _estadoActual && e.entrada == _entrada).map(e => e.salida);
+            _estadoSiguiente = $scope.maquinaEstados.filter(e => e.estadoActual == _estadoActual && e.entrada == _entrada).map(e => e.salida);
+            
+        }
+
+        $scope.salida = _salida;
 
     };
 
@@ -217,6 +232,7 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
             $scope.maquinaEstados.push({entrada: _entrada, estadoActual: _estadoActual, estadoSiguiente: _estadoSiguiente, salida: _salida});
             //_estadoActual = _estadoSiguiente;
 
+            //-------------------------------UNO-----------------------------//
             //1
             _entrada = "1";
             _estadoSiguiente = "";
