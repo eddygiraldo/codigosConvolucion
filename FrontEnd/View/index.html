@@ -1,0 +1,67 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<html ng-app="XORApp">
+
+<head>
+    <!-- CSS -->
+    <!-- Propios -->
+    <link rel="stylesheet" href="..\Content\css\home.css">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="..\Content\css\bootstrap\bootstrap.min.css">
+    <link rel="stylesheet" href="..\Content\css\bootstrap\bootstrap-grid.min.css">
+
+</head>
+
+<body>
+    <!-- JS -->
+    <script src="..\Content\js\angular\angular.min.js"></script>
+    <script src="..\Content\js\angular\angular-route.min.js"></script>
+    <script src="..\Content\js\jquery\jquery-3.2.1.min.js"></script>
+    <script src="..\Content\js\poper\poper.min.js"></script>
+    <script src="..\Content\js\bootstrap\bootstrap.min.js"></script>    
+
+    <!-- Route -->
+    <script src="..\Controllers\Route.js"></script>
+
+    <!-- Controllers -->
+    <script src="..\Controllers\HomeController.js"></script>
+    <script src="..\Controllers\MainController.js"></script>  
+    <script src="..\Controllers\Simulation\SimulationController.js"></script>  
+    
+
+    <div class="contenido" ng-controller="MainController">
+
+        <header>
+            <div class="logo">
+                <img src="..\Content\img\logo\logo.png" class="img-fluid">
+            </div>
+        </header>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand active" href="#!/">Menú</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav" ng-repeat="opcion in Menu">
+                    <li class="nav-item">
+                        <a class="nav-link" ng-href="{{opcion.Url}}">{{opcion.Nombre}}</a>
+                    </li>                 
+                </ul>
+            </div>
+        </nav>
+
+        <div class="myContainer">
+            <div ng-view></div>
+        </div>
+
+        <div class="footer">
+            <b>Andrea Figueroa - Eddy Giraldo  -  2018</b>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

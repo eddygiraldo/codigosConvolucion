@@ -1,0 +1,65 @@
+/* Estilos del Home */
+
+
+body {
+    
+    background: #353839;
+    color: black !important;
+}
+
+.contenido {
+
+    margin: 50px auto auto auto; 
+    width: 80%;
+    border: 3px solid black; 
+    background-color: #EEEEF0;    
+}
+
+.contenido p {
+
+    text-align: justify;
+}
+
+h1 {
+    text-align: center;
+    padding: 10px;
+
+}
+
+.logo {
+
+    background: #EEEEF0;      
+    padding: 10px;
+    text-align: center;
+}
+
+.navbar {
+
+    background: #193441;
+    color: #FCFFF5;
+}
+
+
+.myContainer  {
+
+    padding: 20px;
+    font-size: 18px;
+    background-color: #EEEEF0;
+    color: black;
+    max-width: 100%;
+
+}
+
+.footer {
+
+    background-color: #193441;
+    padding: 10px;
+    text-align: right;
+    color: white;
+}
+
+.variableFija {
+    
+        border-color: red !important;
+    }
+
