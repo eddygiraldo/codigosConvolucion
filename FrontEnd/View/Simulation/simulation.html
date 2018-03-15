@@ -3,85 +3,219 @@
         <h1>{{Home.Title}}</h1>
         <br />
         <h3>Parametrización del circuito</h3>
+
+        <!-- Numero Elementos -->
+        <div class="row">
+            <div class="input-group mb-3 col-md-4">
+                <div class="input-group-prepend">
+                    <label class="input-group-text"># Memorias</label>
+                </div>
+                <select class="custom-select" ng-model="nMemorias" ng-change="selectNumeroMemorias()">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in numberElements" value="{{element.id}}">{{element.name}}</option>
+                </select>
+            </div>
+
+            <div class="input-group mb-3 col-md-4">
+                <div class="input-group-prepend">
+                    <label class="input-group-text"># XOR</label>
+                </div>
+                <select class="custom-select" ng-model="nXor" ng-change="selectNumeroXor()">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in numberElements" value="{{element.id}}">{{element.name}}</option>
+                </select>
+            </div>
+
+            <div class="input-group mb-3 col-md-4">
+                <div class="input-group-prepend">
+                    <label class="input-group-text"># Salidas</label>
+                </div>
+                <select class="custom-select" ng-model="nSalidas" ng-change="selectNumeroSalidas()">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in numberElements" value="{{element.id}}">{{element.name}}</option>
+                </select>
+            </div>
+        </div>
+
+
         <br />
         <br />
         <div class="circuito">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%"
                 height="400px" viewBox="0 0 400 400">
 
-                <rect ng-click="mouseClick($event)" ng-mouseover="mouseOver($event)" id="memoriaUno" x="-140" y="150" fill="{{elements.memoriaUno.fill}}"
-                    stroke="#000000" stroke-width="2" width="50" height="50" />
+                <rect id="memoriaUno" x="-140" y="150" fill="{{elements.memoriaUno.fill}}" stroke="#000000" stroke-width="2" width="50" height="50"
+                />
 
-                <rect ng-click="mouseClick($event)" ng-mouseover="mouseOver($event)" id="memoriaDos" x="-90" y="150" fill="{{elements.memoriaDos.fill}}"
-                    stroke="#000000" stroke-width="2" width="50" height="50" />
+                <rect id="memoriaDos" x="-90" y="150" fill="{{elements.memoriaDos.fill}}" stroke="#000000" stroke-width="2" width="50" height="50"
+                />
 
-                <rect ng-click="mouseClick($event)" ng-mouseover="mouseOver($event)" id="memoriaTres" x="-40" y="150" fill="{{elements.memoriaTres.fill}}"
-                    stroke="#000000" stroke-width="2" width="50" height="50" />
+                <rect id="memoriaTres" x="-40" y="150" fill="{{elements.memoriaTres.fill}}" stroke="#000000" stroke-width="2" width="50"
+                    height="50" />
 
-                <circle ng-click="mouseClick($event)" ng-mouseover="mouseOver($event)" id="xorUno" fill="{{elements.xorUno.fill}}" stroke="#000000"
-                    stroke-width="2" cx="-15" cy="76" r="25" />
+                <circle id="xorUno" fill="{{elements.xorUno.fill}}" stroke="#000000" stroke-width="2" cx="-15" cy="76" r="25" />
 
-                <circle ng-click="mouseClick($event)" ng-mouseover="mouseOver($event)" id="xorDos" fill="{{elements.xorDos.fill}}" stroke="#000000"
-                    stroke-width="2" cx="-65" cy="276" r="25" />
+                <circle id="xorDos" fill="{{elements.xorDos.fill}}" stroke="#000000" stroke-width="2" cx="-65" cy="276" r="25" />
 
-                <circle ng-click="mouseClick($event)" ng-mouseover="mouseOver($event)" id="xorTres" fill="{{elements.xorTres.fill}}" stroke="#000000"
-                    stroke-width="2" cx="-15" cy="326" r="25" />
+                <circle id="xorTres" fill="{{elements.xorTres.fill}}" stroke="#000000" stroke-width="2" cx="-15" cy="326" r="25" />
 
-                <polygon ng-click="mouseClick($event)" ng-mouseover="mouseOver($event)" id="salidaUno" fill="{{elements.salidaUno.fill}}"
-                    stroke="#000000" stroke-width="2" points="100,50 100,100 150,75" />
+                <polygon id="salidaUno" fill="{{elements.salidaUno.fill}}" stroke="#000000" stroke-width="2" points="100,50 100,100 150,75"
+                />
 
-                <polygon ng-click="mouseClick($event)" ng-mouseover="mouseOver($event)" id="salidaDos" fill="{{elements.salidaDos.fill}}"
-                    stroke="#000000" stroke-width="2" points="100,150 100,200 150,175" />
+                <polygon id="salidaDos" fill="{{elements.salidaDos.fill}}" stroke="#000000" stroke-width="2" points="100,150 100,200 150,175"
+                />
 
-                <polygon ng-click="mouseClick($event)" ng-mouseover="mouseOver($event)" id="salidaTres" fill="{{elements.salidaTres.fill}}"
-                    stroke="#000000" stroke-width="2" points="100,250 100,300 150,275" />
+                <polygon id="salidaTres" fill="{{elements.salidaTres.fill}}" stroke="#000000" stroke-width="2" points="100,250 100,300 150,275"
+                />
 
                 <!-- Horizontales -->
-                <line x1="-115" y1="75" x2="-40" y2="75" style="stroke:black;stroke-width:2" />
+                <!-- <line x1="-115" y1="75" x2="-40" y2="75" style="stroke:black;stroke-width:2" />
                 <line x1="10" y1="75" x2="100" y2="75" style="stroke:black;stroke-width:2" />
                 <line x1="10" y1="175" x2="100" y2="175" style="stroke:black;stroke-width:2" />
-                <line x1="-115" y1="275" x2="-90" y2="275" style="stroke:black;stroke-width:2" /> 
-                <line x1="-65" y1="325" x2="-40" y2="325" style="stroke:black;stroke-width:2" /> 
-                <line x1="10" y1="325" x2="50" y2="325" style="stroke:black;stroke-width:2" /> 
-                 
-                <line x1="50" y1="275" x2="100" y2="275" style="stroke:black;stroke-width:2" />
+                <line x1="-115" y1="275" x2="-90" y2="275" style="stroke:black;stroke-width:2" />
+                <line x1="-65" y1="325" x2="-40" y2="325" style="stroke:black;stroke-width:2" />
+                <line x1="10" y1="325" x2="50" y2="325" style="stroke:black;stroke-width:2" />
+
+                <line x1="50" y1="275" x2="100" y2="275" style="stroke:black;stroke-width:2" /> -->
 
                 <!-- Verticales -->
-                <line x1="-115" y1="200" x2="-115" y2="275" style="stroke:black;stroke-width:2" />
+                <!-- <line x1="-115" y1="200" x2="-115" y2="275" style="stroke:black;stroke-width:2" />
                 <line x1="-115" y1="75" x2="-115" y2="150" style="stroke:black;stroke-width:2" />
                 <line x1="-65" y1="200" x2="-65" y2="250" style="stroke:black;stroke-width:2" />
                 <line x1="-65" y1="300" x2="-65" y2="325" style="stroke:black;stroke-width:2" />
                 <line x1="-15" y1="200" x2="-15" y2="300" style="stroke:black;stroke-width:2" />
                 <line x1="-15" y1="150" x2="-15" y2="100" style="stroke:black;stroke-width:2" />
-                <line x1="50" y1="275" x2="50" y2="325" style="stroke:black;stroke-width:2" />
+                <line x1="50" y1="275" x2="50" y2="325" style="stroke:black;stroke-width:2" /> -->
 
-                
+
 
             </svg>
         </div>
 
-        <div class="form-group row">
-            <label for="entrada" class="col-sm-2 col-form-label">
-                Entrada
-            </label>
-            <input type="text" class="form-control col-md-4" id="entrada" ng-model="entrada">
-            </input>
-            <button class="col-md-1 btn btn-primary" ng-click="Ejecutar()" type="button">Ejecutar</button>            
+        <!-- Salida Uno -->
+        <div class="row" ng-hide="ocultarS1">
+            <div class="input-group mb-3 col-md-12">
+                <div class="input-group-prepend">
+                    <label class="input-group-text">S1</label>
+                </div>
+                <select class="custom-select" ng-model="e1SalidaUno">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
+                </select>
+                <select class="custom-select" ng-model="e2SalidaUno">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in xors" value="{{element.id}}">{{element.name}}</option>
+                </select>
+                <select class="custom-select" ng-model="e3SalidaUno">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
+                </select>
+                <select class="custom-select" ng-model="e4SalidaUno">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in xors" value="{{element.id}}">{{element.name}}</option>
+                </select>
+                <select class="custom-select" ng-model="e5SalidaUno">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
+                </select>
+            </div>
         </div>
 
-        <p>Entrada Binaria {{entradaBinaria}}</p>
-        <p>Salida {{salida}}</p>            
+        <!-- Salida Dos -->
+        <div class="row" ng-hide="ocultarS2">
+            <div class="input-group mb-3 col-md-12">
+                <div class="input-group-prepend">
+                    <label class="input-group-text">S2</label>
+                </div>
+                <select class="custom-select" ng-model="e1SalidaDos">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
+                </select>
+                <select class="custom-select" ng-model="e2SalidaDos">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in xors" value="{{element.id}}">{{element.name}}</option>
+                </select>
+                <select class="custom-select" ng-model="e3SalidaDos">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
+                </select>
+                <select class="custom-select" ng-model="e4SalidaDos">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in xors" value="{{element.id}}">{{element.name}}</option>
+                </select>
+                <select class="custom-select" ng-model="e5SalidaDos">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Salida Tres -->
+        <div class="row" ng-hide="ocultarS3">
+            <div class="input-group mb-3 col-md-12">
+                <div class="input-group-prepend">
+                    <label class="input-group-text">S3</label>
+                </div>
+                <select class="custom-select" ng-model="e1SalidaTres">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
+                </select>
+                <select class="custom-select" ng-model="e2SalidaTres">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in xors" value="{{element.id}}">{{element.name}}</option>
+                </select>
+                <select class="custom-select" ng-model="e3SalidaTres">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
+                </select>
+                <select class="custom-select" ng-model="e4SalidaTres">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in xors" value="{{element.id}}">{{element.name}}</option>
+                </select>
+                <select class="custom-select" ng-model="e5SalidaTres">
+                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+                    <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Entrada</span>
+            </div>
+            <textarea class="form-control" id="entrada" ng-model="entrada"></textarea>
+            <button class="col-md-2 btn btn-primary" ng-click="Ejecutar()" type="button">Ejecutar</button>
+        </div>
+        <br />
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Entrada Binaria</span>
+            </div>
+            <textarea class="form-control" id="entradaBinaria" ng-model="entradaBinaria"></textarea>
+        </div>
+
+        <br />
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Salida</span>
+            </div>
+            <textarea class="form-control" id="salida" ng-model="salida" disabled="true"></textarea>
+        </div>
+        <br />
+
 
         <!-- Tabla -->
         <h3>Máquina de Estados</h3>
         <div>
-            <table class="table table-striped">
-                <thead class="thead-inverse">
+            <table class="table table-hover table-dark">
+                <thead>
                     <tr>
                         <th>Entrada</th>
                         <th>Estado Actual</th>
                         <th>Estado Siguiente</th>
-                        <th>Salidas</th>                    
+                        <th>Salidas</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -89,11 +223,11 @@
                         <td>{{fila.entrada}}</td>
                         <td>{{fila.estadoActual}}</td>
                         <td>{{fila.estadoSiguiente}}</td>
-                        <td>{{fila.salida}}</td>                     
+                        <td>{{fila.salida}}</td>
                     </tr>
                 </tbody>
 
             </table>
-        </div>        
+        </div>
     </div>
 </div>

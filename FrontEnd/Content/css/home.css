@@ -3,8 +3,8 @@
 
 body {
     
-    background: #353839;
-    color: black !important;
+    background: #353839 !important;
+    /*color: black !important;*/
 }
 
 .contenido {
@@ -35,8 +35,12 @@ h1 {
 
 .navbar {
 
-    background: #193441;
-    color: #FCFFF5;
+    background: #193441;    
+}
+
+.nav-link, .navbar-brand {
+
+    color: #FCFFF5 !important;
 }
 
 
