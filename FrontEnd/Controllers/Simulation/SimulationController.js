@@ -8,7 +8,9 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
     $scope.entradaBinaria = "";
     $scope.salida = "";
     $scope.maquinaEstados = [];
-
+    $scope.listEstados = [];
+    $scope.diagramaEstados = [];
+    
     $scope.numberElements = [
         { id: "1", name: "Uno" },
         { id: "2", name: "Dos" },
@@ -24,6 +26,8 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
     $scope.ocultarS1 = true;
     $scope.ocultarS2 = true;
     $scope.ocultarS3 = true;
+    $scope.ocultarMaquinaEstados = true;
+    $scope.ocultarDiagramaEstados = true;
 
     $scope.elements = {};
 
@@ -224,38 +228,45 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
             default:
                 break;
         }
-
-
     }
 
     $scope.Ejecutar = function () {
         var _entrada = "0";
-        $scope.entradaBinaria = "";
+        $scope.entradaBinaria = $scope.entrada != "" ? "" : $scope.entradaBinaria;
         var _estadoActual = "";
         var _estadoSiguiente = "";
         var _salida = "";
+        var _entradaSinEspacios = "";
+        $scope.diagramaEstados = [];
 
 
         // Máquina de estados
         $scope.MaquinaEstados();
+        $scope.ocultarMaquinaEstados = false;
 
         //Convertir entrada a binario     
-        $scope.entradaBinaria = stringToBinary($scope.entrada, true);
-        var _entradaSinEspacios = $scope.entradaBinaria.replace(/\s/g, '')
+        $scope.entradaBinaria = $scope.entrada != "" ? stringToBinary($scope.entrada, true) : $scope.entradaBinaria;
+        _entradaSinEspacios = $scope.entradaBinaria.replace(" ", "")
+
         //Codificar Salida
         for (i = 0; i < _entradaSinEspacios.length; i++) {
-            if (i == 0) {
-                _estadoActual = $scope.maquinaEstados[0].estadoActual;
-            } else {
-                _estadoActual = $scope.maquinaEstados.filter(e => e.estadoActual == _estadoSiguiente && e.entrada == _entrada).map(e => e.estadoActual);
-            }
             _entrada = $scope.entradaBinaria[i];
-            _salida += $scope.maquinaEstados.filter(e => e.estadoActual == _estadoActual && e.entrada == _entrada).map(e => e.salida);
-            _estadoSiguiente = $scope.maquinaEstados.filter(e => e.estadoActual == _estadoActual && e.entrada == _entrada).map(e => e.estadoSiguiente);
+            if (_entrada != " " && _entrada != "") {
+                if (i == 0) {
+                    _estadoActual = $scope.maquinaEstados[0].estadoActual;
+                } else {
+                    _estadoActual = $scope.maquinaEstados.filter(e => e.estadoActual == _estadoSiguiente && e.entrada == _entrada).map(e => e.estadoActual);                    
+                }                
 
+                _salida += $scope.maquinaEstados.filter(e => e.estadoActual == _estadoActual && e.entrada == _entrada).map(e => e.salida);
+                _estadoSiguiente = $scope.maquinaEstados.filter(e => e.estadoActual == _estadoActual && e.entrada == _entrada).map(e => e.estadoSiguiente);
+                $scope.diagramaEstados.push($scope.listEstados.filter(e => e.value == _estadoSiguiente));
+            }
         }
 
         $scope.salida = _salida;
+
+        $scope.ocultarDiagramaEstados = false;
 
     };
 
@@ -266,177 +277,164 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
         var _salida = "0";
         var _newCadena = "";
 
-        var _numMemorias = 0;
+        var _numMemorias = $scope.nMemorias;
         var _numFilas = 0;
-        var _numSalidas = 0;
         var _resultParcial = "";
-        var _listEstados = [];
+        $scope.listEstados = [];      
+        var _listEntradas = [
+            "0", "1"
+        ];
 
         $scope.maquinaEstados = [];
 
         //maquina estados         
-        if ($scope.elements.memoriaUno.active) {
-            _numMemorias += 1;
-        }
-
-        if ($scope.elements.memoriaDos.active) {
-            _numMemorias += 1;
-        }
-
-        if ($scope.elements.memoriaTres.active) {
-            _numMemorias += 1;
-        }
-
-        _numFilas = Math.pow(2, _numMemorias);
+        _numFilas = Math.pow(2, $scope.nMemorias);
 
         //Estados        
         if (_numMemorias == 1) {
-            _listEstados.push({ id: 0, value: "0" });
-            _listEstados.push({ id: 1, value: "1" });
+            $scope.listEstados.push({ id: 0, value: "0", name: "S0" });
+            $scope.listEstados.push({ id: 1, value: "1", name: "S1" });
         } else if (_numMemorias == 2) {
-            _listEstados.push({ id: 0, value: "00" });
-            _listEstados.push({ id: 1, value: "01" });
-            _listEstados.push({ id: 2, value: "10" });
-            _listEstados.push({ id: 3, value: "11" });
+            $scope.listEstados.push({ id: 0, value: "00", name: "S0" });
+            $scope.listEstados.push({ id: 1, value: "01", name: "S1" });
+            $scope.listEstados.push({ id: 2, value: "10", name: "S2" });
+            $scope.listEstados.push({ id: 3, value: "11", name: "S3" });
         } else if (_numMemorias == 3) {
-            _listEstados.push({ id: 0, value: "000" });
-            _listEstados.push({ id: 1, value: "001" });
-            _listEstados.push({ id: 2, value: "010" });
-            _listEstados.push({ id: 3, value: "011" });
-            _listEstados.push({ id: 4, value: "100" });
-            _listEstados.push({ id: 5, value: "101" });
-            _listEstados.push({ id: 6, value: "110" });
-            _listEstados.push({ id: 7, value: "111" });
+            $scope.listEstados.push({ id: 0, value: "000", name: "S0" });
+            $scope.listEstados.push({ id: 1, value: "001", name: "S1" });
+            $scope.listEstados.push({ id: 2, value: "010", name: "S2" });
+            $scope.listEstados.push({ id: 3, value: "011", name: "S3" });
+            $scope.listEstados.push({ id: 4, value: "100", name: "S4" });
+            $scope.listEstados.push({ id: 5, value: "101", name: "S5" });
+            $scope.listEstados.push({ id: 6, value: "110", name: "S6" });
+            $scope.listEstados.push({ id: 7, value: "111", name: "S7" });
         }
 
         // S1 = M1 XOR M3
         // S2 = M3
         // S3 = (M1 XOR M2) XOR M3
-
         for (var i = 0; i < _numFilas; i++) {
 
-            _estadoActual = _listEstados[i].value;
+            _estadoActual = $scope.listEstados[i].value;
+            
+            for (var k = 0; k < _listEntradas.length; k++) {
 
-            //0
-            _entrada = "0";
-            _estadoSiguiente = "";
-            _newCadena = "";
-            _salida = "";
+                _entrada = _listEntradas[k];
+                _estadoSiguiente = "";
+                _newCadena = "";
+                _salida = "";
 
-            for (var j = 0; j < _estadoActual.length; j++) {
-                if (j == 0) {
-                    _newCadena += _entrada;
-                } else {
-                    _newCadena += _estadoActual[j - 1];
-                }
-            }
-            _estadoSiguiente = _newCadena;
-
-            //salidaUno
-            if ($scope.elements.salidaUno.active) {
-                //xorUno?
-                if ($scope.elements.xorUno.active) {
-                    if ($scope.elements.memoriaUno.active && $scope.elements.memoriaTres.active) {
-                        _salida += _estadoActual[0] | ($scope.elements.memoriaDos.active ? _estadoActual[2] : _estadoActual[1]);
+                for (var j = 0; j < _estadoActual.length; j++) {
+                    if (j == 0) {
+                        _newCadena += _entrada;
+                    } else {
+                        _newCadena += _estadoActual[j - 1];
                     }
                 }
-            }
+                _estadoSiguiente = _newCadena;
 
-            //salidaDos
-            if ($scope.elements.salidaDos.active) {
-                if ($scope.elements.memoriaTres.active) {
-                    _salida += $scope.elements.memoriaUno.active && $scope.elements.memoriaDos.active ? _estadoActual[2] :
-                        $scope.elements.memoriaUno.active && !$scope.elements.memoriaDos.active ? _estadoActual[1] :
-                            $scope.elements.memoriaDos.active && !$scope.elements.memoriaUno.active ? _estadoActual[1] : _estadoActual[0];
-                }
-            }
+                //salidaUno
+                _resultParcial = "";
+                if ($scope.elements.salidaUno.active) {
+                    if ($scope.e1SalidaUno != undefined) {
+                        _resultParcial = getInputValue($scope.e1SalidaUno, _estadoActual, _entrada);
+                    }
 
-            //salidaTres
-            _resultParcial = "";
-            if ($scope.elements.salidaTres.active) {
-                if ($scope.elements.memoriaUno.active && $scope.elements.memoriaDos.active) {
-                    if ($scope.elements.xorDos.active) {
-                        _resultParcial = _estadoActual[0] | _estadoActual[2];
-                        if ($scope.elements.memoriaTres.active && $scope.elements.xorTres.active) {
-                            _salida += _resultParcial | _estadoActual[3];
+                    if ($scope.e2SalidaUno != undefined) {
+                        if ($scope.e3SalidaUno != undefined) {
+                            _resultParcial = (_resultParcial != getInputValue($scope.e3SalidaUno, _estadoActual, _entrada)) ? "1" : "0";
                         }
                     }
-                } else if ($scope.elements.memoriaUno.active && $scope.elements.memoriaTres.active) {
-                    _salida += _estadoActual[0] | _estadoActual[1];
-                }
-            }
 
-
-            $scope.maquinaEstados.push({ entrada: _entrada, estadoActual: _estadoActual, estadoSiguiente: _estadoSiguiente, salida: _salida });
-            //_estadoActual = _estadoSiguiente;
-
-            //-------------------------------UNO-----------------------------//
-            //1
-            _entrada = "1";
-            _estadoSiguiente = "";
-            _newCadena = "";
-            _salida = "";
-
-            for (var j = 0; j < _estadoActual.length; j++) {
-                if (j == 0) {
-                    _newCadena += _entrada;
-                } else {
-                    _newCadena += _estadoActual[j - 1];
-                }
-            }
-            _estadoSiguiente = _newCadena;
-
-            //salidaUno
-            if ($scope.elements.salidaUno.active) {
-                //xorUno?
-                if ($scope.elements.xorUno.active) {
-                    if ($scope.elements.memoriaUno.active && $scope.elements.memoriaTres.active) {
-                        _salida += _estadoActual[0] | ($scope.elements.memoriaDos.active ? _estadoActual[2] : _estadoActual[1]);
-                    }
-                }
-            }
-
-            //salidaDos
-            if ($scope.elements.salidaDos.active) {
-                if ($scope.elements.memoriaTres.active) {
-                    _salida += $scope.elements.memoriaUno.active && $scope.elements.memoriaDos.active ? _estadoActual[2] :
-                        $scope.elements.memoriaUno.active && !$scope.elements.memoriaDos.active ? _estadoActual[1] :
-                            $scope.elements.memoriaDos.active && !$scope.elements.memoriaUno.active ? _estadoActual[1] : _estadoActual[0];
-                }
-            }
-
-            //salidaTres
-            _resultParcial = "";
-            if ($scope.elements.salidaTres.active) {
-                if ($scope.elements.memoriaUno.active && $scope.elements.memoriaDos.active) {
-                    if ($scope.elements.xorDos.active) {
-                        _resultParcial = _estadoActual[0] | _estadoActual[2];
-                        if ($scope.elements.memoriaTres.active && $scope.elements.xorTres.active) {
-                            _salida += _resultParcial | _estadoActual[3];
+                    if ($scope.e4SalidaUno != undefined) {
+                        if ($scope.e5SalidaUno != undefined) {
+                            _resultParcial = (_resultParcial.toString() != getInputValue($scope.e5SalidaUno, _estadoActual, _entrada)) ? "1" : "0";
                         }
                     }
-                } else if ($scope.elements.memoriaUno.active && $scope.elements.memoriaTres.active) {
-                    _salida += _estadoActual[0] | _estadoActual[1];
+                    _salida += _resultParcial;
                 }
-            }
 
-            $scope.maquinaEstados.push({ entrada: _entrada, estadoActual: _estadoActual, estadoSiguiente: _estadoSiguiente, salida: _salida });
-            //_estadoActual = _estadoSiguiente;
+                //salidaDos
+                _resultParcial = "";
+                if ($scope.elements.salidaDos.active) {
+                    if ($scope.e1SalidaDos != undefined) {
+                        _resultParcial = getInputValue($scope.e1SalidaDos, _estadoActual, _entrada);
+                    }
+
+                    if ($scope.e2SalidaDos != undefined) {
+                        if ($scope.e3SalidaDos != undefined) {
+                            _resultParcial = (_resultParcial != getInputValue($scope.e3SalidaDos, _estadoActual, _entrada)) ? "1" : "0";
+                        }
+                    }
+
+                    if ($scope.e4SalidaDos != undefined) {
+                        if ($scope.e5SalidaDos != undefined) {
+                            _resultParcial = (_resultParcial != getInputValue($scope.e5SalidaDos, _estadoActual, _entrada)) ? "1" : "0";
+                        }
+                    }
+                    _salida += _resultParcial;
+                }
+
+                //salidaTres
+                _resultParcial = "";
+                if ($scope.elements.salidaTres.active) {
+                    if ($scope.e1SalidaTres != undefined) {
+                        _resultParcial = getInputValue($scope.e1SalidaTres, _estadoActual, _entrada);
+                    }
+
+                    if ($scope.e2SalidaTres != undefined) {
+                        if ($scope.e3SalidaTres != undefined) {
+                            _resultParcial = (_resultParcial != getInputValue($scope.e3SalidaTres, _estadoActual, _entrada)) ? "1" : "0";
+                        }
+                    }
+
+                    if ($scope.e4SalidaTres != undefined) {
+                        if ($scope.e5SalidaTres != undefined) {
+                            _resultParcial = (_resultParcial != getInputValue($scope.e5SalidaTres, _estadoActual, _entrada)) ? "1" : "0";
+                        }
+                    }
+                    _salida += _resultParcial;
+                }
+
+                $scope.maquinaEstados.push({ entrada: _entrada, estadoActual: _estadoActual, estadoSiguiente: _estadoSiguiente, salida: _salida });
+                //_estadoActual = _estadoSiguiente;                
+            }
         }
-    }
+    };
 
 
-    function stringToBinary(str, spaceSeparatedOctets) {
+    function stringToBinary(str) {
+        var result = "";
         function zeroPad(num) {
             return "00000000".slice(String(num).length) + num;
         }
+        
+        for (i = 0; i < str.length; i++) {
+            result += zeroPad(str[i].charCodeAt(0).toString(2)) + " ";
+        }
 
-        return str.replace(/[\s\S]/g, function (str) {
-            str = zeroPad(str.charCodeAt().toString(2));
-            return !1 == spaceSeparatedOctets ? str : str + " "
-        });
+        return result;
     };
 
+    function getInputValue(selector, estado, entrada) {
+        switch (selector) {
+            case "entrada":
+                return entrada;
+                break;
+            case "memoriaUno":
+                return estado[0];
+                break;
+            case "memoriaDos":
+                return estado[1];
+                break;
+            case "memoriaTres":
+                return estado[2];
+                break;
+            default:
+                return "";
+                break;
+        }
+    };
 
 });
 

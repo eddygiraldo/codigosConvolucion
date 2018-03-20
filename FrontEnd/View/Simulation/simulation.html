@@ -207,8 +207,8 @@
 
 
         <!-- Tabla -->
-        <h3>Máquina de Estados</h3>
-        <div>
+        <h3 ng-hide="ocultarMaquinaEstados">Máquina de Estados</h3>
+        <div ng-hide="ocultarMaquinaEstados">
             <table class="table table-hover table-dark">
                 <thead>
                     <tr>
@@ -228,6 +228,22 @@
                 </tbody>
 
             </table>
+        </div>
+
+        <br />
+
+
+        <!-- Diagrama -->
+        <h3 ng-hide="ocultarDiagramaEstados">Diagrama de Estados</h3>
+        <div ng-hide="ocultarDiagramaEstados">
+            <ul>
+                <li ng-repeat="element in listEstados">{{element.name}}: {{element.value}}</li>
+            </ul>
+
+            <p>
+                <i ng-repeat="state in diagramaEstados">-> {{state[0].name}}</i>
+            </p>           
+            
         </div>
     </div>
 </div>
