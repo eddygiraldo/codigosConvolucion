@@ -11,7 +11,7 @@
                     <label class="input-group-text"># Memorias</label>
                 </div>
                 <select class="custom-select" ng-model="nMemorias" ng-change="selectNumeroMemorias()">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+
                     <option ng-repeat="element in numberElements" value="{{element.id}}">{{element.name}}</option>
                 </select>
             </div>
@@ -21,7 +21,7 @@
                     <label class="input-group-text"># XOR</label>
                 </div>
                 <select class="custom-select" ng-model="nXor" ng-change="selectNumeroXor()">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+
                     <option ng-repeat="element in numberElements" value="{{element.id}}">{{element.name}}</option>
                 </select>
             </div>
@@ -31,7 +31,7 @@
                     <label class="input-group-text"># Salidas</label>
                 </div>
                 <select class="custom-select" ng-model="nSalidas" ng-change="selectNumeroSalidas()">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
+
                     <option ng-repeat="element in numberElements" value="{{element.id}}">{{element.name}}</option>
                 </select>
             </div>
@@ -67,28 +67,6 @@
 
                 <polygon id="salidaTres" fill="{{elements.salidaTres.fill}}" stroke="#000000" stroke-width="2" points="100,250 100,300 150,275"
                 />
-
-                <!-- Horizontales -->
-                <!-- <line x1="-115" y1="75" x2="-40" y2="75" style="stroke:black;stroke-width:2" />
-                <line x1="10" y1="75" x2="100" y2="75" style="stroke:black;stroke-width:2" />
-                <line x1="10" y1="175" x2="100" y2="175" style="stroke:black;stroke-width:2" />
-                <line x1="-115" y1="275" x2="-90" y2="275" style="stroke:black;stroke-width:2" />
-                <line x1="-65" y1="325" x2="-40" y2="325" style="stroke:black;stroke-width:2" />
-                <line x1="10" y1="325" x2="50" y2="325" style="stroke:black;stroke-width:2" />
-
-                <line x1="50" y1="275" x2="100" y2="275" style="stroke:black;stroke-width:2" /> -->
-
-                <!-- Verticales -->
-                <!-- <line x1="-115" y1="200" x2="-115" y2="275" style="stroke:black;stroke-width:2" />
-                <line x1="-115" y1="75" x2="-115" y2="150" style="stroke:black;stroke-width:2" />
-                <line x1="-65" y1="200" x2="-65" y2="250" style="stroke:black;stroke-width:2" />
-                <line x1="-65" y1="300" x2="-65" y2="325" style="stroke:black;stroke-width:2" />
-                <line x1="-15" y1="200" x2="-15" y2="300" style="stroke:black;stroke-width:2" />
-                <line x1="-15" y1="150" x2="-15" y2="100" style="stroke:black;stroke-width:2" />
-                <line x1="50" y1="275" x2="50" y2="325" style="stroke:black;stroke-width:2" /> -->
-
-
-
             </svg>
         </div>
 
@@ -99,23 +77,18 @@
                     <label class="input-group-text">S1</label>
                 </div>
                 <select class="custom-select" ng-model="e1SalidaUno">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
                     <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
                 </select>
                 <select class="custom-select" ng-model="e2SalidaUno">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
                     <option ng-repeat="element in xors" value="{{element.id}}">{{element.name}}</option>
                 </select>
                 <select class="custom-select" ng-model="e3SalidaUno">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
                     <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
                 </select>
                 <select class="custom-select" ng-model="e4SalidaUno">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
                     <option ng-repeat="element in xors" value="{{element.id}}">{{element.name}}</option>
                 </select>
                 <select class="custom-select" ng-model="e5SalidaUno">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
                     <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
                 </select>
             </div>
@@ -128,23 +101,18 @@
                     <label class="input-group-text">S2</label>
                 </div>
                 <select class="custom-select" ng-model="e1SalidaDos">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
                     <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
                 </select>
                 <select class="custom-select" ng-model="e2SalidaDos">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
                     <option ng-repeat="element in xors" value="{{element.id}}">{{element.name}}</option>
                 </select>
                 <select class="custom-select" ng-model="e3SalidaDos">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
                     <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
                 </select>
                 <select class="custom-select" ng-model="e4SalidaDos">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
                     <option ng-repeat="element in xors" value="{{element.id}}">{{element.name}}</option>
                 </select>
                 <select class="custom-select" ng-model="e5SalidaDos">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
                     <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
                 </select>
             </div>
@@ -157,23 +125,18 @@
                     <label class="input-group-text">S3</label>
                 </div>
                 <select class="custom-select" ng-model="e1SalidaTres">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
                     <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
                 </select>
                 <select class="custom-select" ng-model="e2SalidaTres">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
                     <option ng-repeat="element in xors" value="{{element.id}}">{{element.name}}</option>
                 </select>
                 <select class="custom-select" ng-model="e3SalidaTres">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
                     <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
                 </select>
                 <select class="custom-select" ng-model="e4SalidaTres">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
                     <option ng-repeat="element in xors" value="{{element.id}}">{{element.name}}</option>
                 </select>
                 <select class="custom-select" ng-model="e5SalidaTres">
-                    <!-- <option ng-selected="selected">Seleccione</option>             -->
                     <option ng-repeat="element in memorias" value="{{element.id}}">{{element.name}}</option>
                 </select>
             </div>
@@ -239,11 +202,18 @@
             <ul>
                 <li ng-repeat="element in listEstados">{{element.name}}: {{element.value}}</li>
             </ul>
-
             <p>
-                <i ng-repeat="state in diagramaEstados">-> {{state[0].name}}</i>
-            </p>           
-            
+                <p ng-repeat="state in diagramaEstados">{{state.actual[0]}} -- {{state.entrada}}/{{state.salida}} --> {{state.siguiente[0]}}</p>
+            </p>
+
+        </div>
+
+        <!-- Secuencia -->
+        <h3 ng-hide="ocultarSecuenciaEstados">Secuencia de Estados</h3>
+        <div ng-hide="ocultarSecuenciaEstados">
+            <p>
+                <i ng-repeat="state in secuenciaEstados">-> {{state[0].name}}</i>
+            </p>
         </div>
     </div>
 </div>

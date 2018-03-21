@@ -10,6 +10,7 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
     $scope.maquinaEstados = [];
     $scope.listEstados = [];
     $scope.diagramaEstados = [];
+    $scope.secuenciaEstados = [];
     
     $scope.numberElements = [
         { id: "1", name: "Uno" },
@@ -28,6 +29,7 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
     $scope.ocultarS3 = true;
     $scope.ocultarMaquinaEstados = true;
     $scope.ocultarDiagramaEstados = true;
+    $scope.ocultarSecuenciaEstados = true;
 
     $scope.elements = {};
 
@@ -237,7 +239,7 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
         var _estadoSiguiente = "";
         var _salida = "";
         var _entradaSinEspacios = "";
-        $scope.diagramaEstados = [];
+        $scope.secuenciaEstados = [];
 
 
         // Máquina de estados
@@ -246,7 +248,9 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
 
         //Convertir entrada a binario     
         $scope.entradaBinaria = $scope.entrada != "" ? stringToBinary($scope.entrada, true) : $scope.entradaBinaria;
-        _entradaSinEspacios = $scope.entradaBinaria.replace(" ", "")
+        $scope.entradaBinaria = $scope.entradaBinaria.concat($scope.nMemorias != undefined ? $scope.nMemorias == 1 ? "0" : $scope.nMemorias == 2 ? "00" : $scope.nMemorias == 3 ? "000" : "" : "");
+        _entradaSinEspacios = $scope.entradaBinaria.replace(" ", "+");
+        
 
         //Codificar Salida
         for (i = 0; i < _entradaSinEspacios.length; i++) {
@@ -260,13 +264,13 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
 
                 _salida += $scope.maquinaEstados.filter(e => e.estadoActual == _estadoActual && e.entrada == _entrada).map(e => e.salida);
                 _estadoSiguiente = $scope.maquinaEstados.filter(e => e.estadoActual == _estadoActual && e.entrada == _entrada).map(e => e.estadoSiguiente);
-                $scope.diagramaEstados.push($scope.listEstados.filter(e => e.value == _estadoSiguiente));
+                $scope.secuenciaEstados.push($scope.listEstados.filter(e => e.value == _estadoSiguiente));
             }
         }
 
         $scope.salida = _salida;
 
-        $scope.ocultarDiagramaEstados = false;
+        $scope.ocultarSecuenciaEstados = false;
 
     };
 
@@ -280,7 +284,8 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
         var _numMemorias = $scope.nMemorias;
         var _numFilas = 0;
         var _resultParcial = "";
-        $scope.listEstados = [];      
+        $scope.listEstados = [];
+        $scope.diagramaEstados = [];
         var _listEntradas = [
             "0", "1"
         ];
@@ -309,7 +314,7 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
             $scope.listEstados.push({ id: 6, value: "110", name: "S6" });
             $scope.listEstados.push({ id: 7, value: "111", name: "S7" });
         }
-
+        $scope.ocultarDiagramaEstados = false;
         // S1 = M1 XOR M3
         // S2 = M3
         // S3 = (M1 XOR M2) XOR M3
@@ -331,7 +336,7 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
                         _newCadena += _estadoActual[j - 1];
                     }
                 }
-                _estadoSiguiente = _newCadena;
+                _estadoSiguiente = _newCadena;                
 
                 //salidaUno
                 _resultParcial = "";
@@ -396,6 +401,7 @@ XORApp.controller('SimulationController', function ($scope, $timeout) {
                     _salida += _resultParcial;
                 }
 
+                $scope.diagramaEstados.push({entrada: _entrada, salida: _salida, actual: $scope.listEstados.filter(e => e.value == _estadoActual).map(e => e.name) , siguiente: $scope.listEstados.filter(e => e.value == _estadoSiguiente).map(e => e.name)});
                 $scope.maquinaEstados.push({ entrada: _entrada, estadoActual: _estadoActual, estadoSiguiente: _estadoSiguiente, salida: _salida });
                 //_estadoActual = _estadoSiguiente;                
             }
