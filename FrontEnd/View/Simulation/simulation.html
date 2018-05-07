@@ -164,7 +164,8 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Salida</span>
             </div>
-            <textarea class="form-control" id="salida" ng-model="salida" disabled="true"></textarea>
+            <textarea class="form-control" id="salida" ng-model="salida"></textarea>
+            <button class="col-md-2 btn btn-warning" ng-click="Corregir()" type="button">Corregir Errores</button>
         </div>
         <br />
 
@@ -203,7 +204,7 @@
                 <li ng-repeat="element in listEstados">{{element.name}}: {{element.value}}</li>
             </ul>
             <p>
-                <p ng-repeat="state in diagramaEstados">{{state.actual[0]}} -- {{state.entrada}}/{{state.salida}} --> {{state.siguiente[0]}}</p>
+                <p ng-repeat="state in diagramaEstados">{{state.actual}} -- {{state.entrada}}/{{state.salida}} --> {{state.siguiente}}</p>
             </p>
 
         </div>
@@ -214,6 +215,20 @@
             <p>
                 <i ng-repeat="state in secuenciaEstados">-> {{state[0].name}}</i>
             </p>
+        </div>
+
+
+        <!-- Corrección de errores -->
+        <h3 ng-hide="ocultarCorreccionErrores">Corrección de Errores</h3>
+        <div ng-hide="ocultarCorreccionErrores">
+
+            <canvas id="viterbiChart" class="col-md-6"></canvas>
+            <pre>{{ mensajeOriginal | json}}</pre>
+
+            <pre>{{ viterbi | json}}</pre>
+
+            <h4>Lista estados (eliminar)</h4>
+            <pre>{{ listEstados | json}}</pre>
         </div>
     </div>
 </div>
